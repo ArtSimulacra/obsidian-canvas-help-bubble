@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-canvas-help-bubble",
+  "name": "Canvas Help Bubble",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Elegant floating help bubbles for Obsidian Canvas cards.",
+  "author": "Твое Имя",
+  "authorUrl": "https://github.com/your-username",
+  "isDesktopOnly": false
+}
