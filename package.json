@@ -1,0 +1,28 @@
+{
+  "name": "obsidian-canvas-help-bubble",
+  "version": "1.0.0",
+  "description": "Elegant floating help bubbles for Obsidian Canvas cards.",
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit && node esbuild.config.mjs production",
+    "version": "node version-bump.mjs && node esbuild.config.mjs production"
+  },
+  "keywords": [
+    "obsidian",
+    "obsidian-plugin",
+    "canvas"
+  ],
+  "author": "ArtSimulacra",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.11.21",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "builtin-modules": "^3.2.0",
+    "esbuild": "0.14.11",
+    "obsidian": "latest",
+    "tslib": "2.3.1",
+    "typescript": "4.5.4"
+  }
+}
