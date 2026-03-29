@@ -1,0 +1,140 @@
+/* 1. КОНТЕЙНЕР-ОБЕРТКА (фиксирует положение в Канвасе) */
+.help-wrapper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
+}
+
+/* 2. ОКНО СПРАВКИ (Базовое состояние = ЗАКРЫТЫЙ КРУЖОК) */
+.help-wrapper details {
+    background: #ffdbd8;
+    border: 1px solid #FF6250;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    overflow: hidden;
+    position: absolute; 
+    top: 0;
+    right: 0; /* Фиксируем правый край, чтобы окно росло влево */
+    
+    width: 32px;
+    max-height: 32px; /* Используем max-height для плавной анимации высоты */
+    border-radius: 16px;
+    
+    /* Плавная анимация раскрытия */
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-radius 0.3s ease;
+}
+
+/* 3. ОКНО СПРАВКИ (Состояние = ОТКРЫТО) */
+.help-wrapper details[open] {
+    width: 260px;
+    max-height: 500px; /* Раскрываем контент вниз */
+    border-radius: 12px;
+}
+
+/* 4. ШАПКА / КНОПКА (Флексбокс для центрирования) */
+.help-wrapper summary {
+    list-style: none;
+    outline: none;
+    cursor: pointer;
+    
+    display: flex;
+    align-items: center;     /* Центр по вертикали */
+    justify-content: center; /* Центр по горизонтали (работает для закрытого) */
+    
+    position: relative;
+    width: 32px; 
+    height: 32px;
+    margin: 0 !important;
+    padding: 0 !important;   /* Жестко убиваем отступы Обсидиана */
+    border-bottom: 1px solid transparent;
+    transition: width 0.3s, border-bottom 0.3s;
+}
+
+/* Убираем стандартную стрелку браузера */
+.help-wrapper summary::-webkit-details-marker { display: none; }
+
+/* Шапка в открытом виде (растягиваем и прижимаем текст влево) */
+.help-wrapper details[open] summary {
+    width: 260px; 
+    border-bottom: 1px solid rgba(255, 98, 80, 0.2);
+    justify-content: flex-start; 
+    padding-left: 12px !important; 
+}
+
+/* 5. ИКОНКА КНИЖКИ */
+.help-wrapper .help-icon {
+    width: 16px;
+    height: 16px;
+    color: #FF6250; 
+    flex-shrink: 0; 
+    margin: 0 !important;
+    padding: 0 !important; 
+    transition: margin 0.3s ease, transform 0.3s ease; /* Добавили transform в плавность */
+    
+    /* ТОТ САМЫЙ РУЧНОЙ СДВИГ ВЛЕВО НА 3px */
+    transform: translateX(-1px); 
+}
+
+/* В открытом окне даем отступ от текста и убираем сдвиг, чтобы стояла ровно */
+.help-wrapper details[open] .help-icon {
+    margin-right: 8px !important; 
+    transform: translateX(0); /* Возвращаем иконку на место */
+}
+
+
+/* 6. МАГИЯ ЦЕНТРОВКИ: Прячем текст и крестик, когда закрыто */
+.help-wrapper details:not([open]) .help-title,
+.help-wrapper details:not([open]) .help-close {
+    display: none !important; 
+}
+
+/* 7. ЗАГОЛОВОК "Справка" */
+.help-wrapper .help-title {
+    color: #FF6250;
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+/* 8. КРЕСТИК ЗАКРЫТИЯ */
+.help-wrapper .help-close {
+    position: absolute;
+    right: 12px;
+    line-height: 30px;
+    color: #FF6250;
+    font-size: 22px;
+    pointer-events: none; /* Чтобы крестик не блокировал клик по шапке */
+}
+
+/* 9. ТЕКСТ СПРАВКИ */
+.help-wrapper .help-content {
+    width: 260px;
+    padding: 12px 15px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #333333;
+    box-sizing: border-box;
+    
+    /* Плавное появление текста после открытия окна */
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none; /* Текст не мешает клику закрытия */
+}
+
+.help-wrapper details[open] .help-content {
+    opacity: 1;
+    transition-delay: 0.1s;
+}
+
+/* 10. НЕВИДИМЫЙ СЛОЙ (позволяет закрыть окно кликом в любое место розового поля) */
+.help-wrapper details[open] summary::before {
+    content: "";
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 260px;
+    height: 500px;
+    z-index: 5;
+}
